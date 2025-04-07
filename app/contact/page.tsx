@@ -1,12 +1,11 @@
 'use client';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import PageLayout from '@/components/PageLayout';
 import { FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa';
-import ReCAPTCHA from "react-google-recaptcha";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ACCEPTED_FILE_TYPES = ["application/pdf", "image/jpeg", "image/png", "image/jpg"];
@@ -44,29 +43,30 @@ const inputFocusClasses = `
   hover:border-gray-300 dark:hover:border-gray-600
 `;
 
+// File input styling
+const fileInputClasses = `
+  file:mr-4 file:py-2 file:px-4
+  file:rounded-lg file:border-0
+  file:text-sm file:font-semibold
+  file:bg-primary/10 file:text-primary
+  dark:file:bg-primary-light/10 dark:file:text-primary-light
+  file:hover:bg-primary/20 dark:file:hover:bg-primary-light/20
+  file:cursor-pointer
+  cursor-pointer
+`;
+
 export default function ContactPage() {
   const [status, setStatus] = useState('');
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
   });
 
   const onSubmit = async (data: ContactFormData) => {
-    // Only check captcha if site key is configured
-    if (process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && !captchaToken) {
-      setStatus('Please complete the captcha');
-      return;
-    }
-
     setStatus('Sending...');
     const formData = new FormData();
     formData.append('name', data.name);
     formData.append('email', data.email);
     formData.append('message', data.message);
-    if (captchaToken) {
-      formData.append('captchaToken', captchaToken);
-    }
     
     if (data.attachment && data.attachment[0]) {
       formData.append('attachment', data.attachment[0]);
@@ -80,8 +80,6 @@ export default function ContactPage() {
       if (res.ok) {
         setStatus('Message sent successfully!');
         reset();
-        recaptchaRef.current?.reset();
-        setCaptchaToken(null);
       } else {
         const data = await res.json();
         setStatus(data.error || 'Failed to send message. Please try again.');
@@ -110,8 +108,6 @@ export default function ContactPage() {
       isExternal: true
     }
   ];
-
-  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
   return (
     <PageLayout 
@@ -213,19 +209,13 @@ export default function ContactPage() {
 
             <div className="space-y-1">
               <label htmlFor="attachment" className="block text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200">
-                Attachment (optional)
+                Attachment (Optional)
               </label>
               <input
                 type="file"
-                accept=".pdf,.jpg,.jpeg,.png"
                 {...register('attachment')}
-                className={`${inputFocusClasses} 
-                  file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 
-                  file:text-sm file:font-medium 
-                  file:bg-primary file:text-white 
-                  file:transition-colors file:duration-200
-                  hover:file:bg-primary/90 dark:hover:file:bg-primary-light/90 
-                  file:cursor-pointer`}
+                accept=".pdf,.jpg,.jpeg,.png"
+                className={`${inputFocusClasses} ${fileInputClasses}`}
               />
               {errors.attachment && (
                 <motion.p 
@@ -233,54 +223,35 @@ export default function ContactPage() {
                   animate={{ opacity: 1, y: 0 }}
                   className="mt-1 text-sm text-red-500 dark:text-red-400"
                 >
-                  {errors.attachment.message?.toString()}
+                  {errors.attachment.message}
                 </motion.p>
               )}
-              <p className="mt-1 text-xs text-gray-500 dark:text-gray-400 transition-colors duration-200">
-                Max file size: 5MB. Accepted formats: PDF, JPEG, PNG
-              </p>
             </div>
 
-            {recaptchaSiteKey && (
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="flex justify-center"
+            <div className="flex items-center justify-between">
+              <motion.button
+                type="submit"
+                className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 dark:bg-primary-light dark:hover:bg-primary-light/90 transition-colors duration-200"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <ReCAPTCHA
-                  ref={recaptchaRef}
-                  sitekey={recaptchaSiteKey}
-                  onChange={(token) => setCaptchaToken(token)}
-                  theme="light"
-                />
-              </motion.div>
-            )}
-
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              type="submit"
-              className="w-full px-6 py-3 text-base font-medium text-white bg-primary dark:bg-primary-light hover:bg-primary/90 dark:hover:bg-primary-light/90 rounded-lg transition-all duration-200 ease-in-out transform hover:shadow-lg dark:hover:shadow-primary-light/20"
-            >
-              Send Message
-            </motion.button>
+                Send Message
+              </motion.button>
+              {status && (
+                <motion.p 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className={`text-sm ${
+                    status.includes('success') 
+                      ? 'text-green-500 dark:text-green-400' 
+                      : 'text-red-500 dark:text-red-400'
+                  }`}
+                >
+                  {status}
+                </motion.p>
+              )}
+            </div>
           </form>
-
-          {status && (
-            <motion.p 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className={`text-sm mt-4 text-center font-medium ${
-                status === 'Message sent successfully!' 
-                  ? 'text-green-500 dark:text-green-400'
-                  : status === 'Sending...'
-                  ? 'text-gray-500 dark:text-gray-400'
-                  : 'text-red-500 dark:text-red-400'
-              }`}
-            >
-              {status}
-            </motion.p>
-          )}
         </motion.div>
       </div>
     </PageLayout>

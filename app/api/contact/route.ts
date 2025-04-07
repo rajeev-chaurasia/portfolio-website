@@ -1,39 +1,29 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
-async function verifyCaptcha(token: string) {
-  try {
-    const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`,
-    });
-
-    const data = await response.json();
-    return data.success;
-  } catch (error) {
-    console.error('reCAPTCHA verification error:', error);
-    return false;
-  }
-}
-
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
     const name = formData.get('name') as string;
     const email = formData.get('email') as string;
     const message = formData.get('message') as string;
-    const captchaToken = formData.get('captchaToken') as string | null;
     const attachment = formData.get('attachment') as File | null;
 
-    // Only verify captcha if secret key is configured
-    if (process.env.RECAPTCHA_SECRET_KEY && captchaToken) {
-      const isValidCaptcha = await verifyCaptcha(captchaToken);
-      if (!isValidCaptcha) {
-        return NextResponse.json({ error: 'Invalid captcha' }, { status: 400 });
-      }
+    // Validate required fields
+    if (!name || !email || !message) {
+      return NextResponse.json(
+        { error: 'Name, email, and message are required' },
+        { status: 400 }
+      );
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { error: 'Invalid email format' },
+        { status: 400 }
+      );
     }
 
     // Configure SMTP transporter
