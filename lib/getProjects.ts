@@ -21,7 +21,7 @@ export async function getProjects() {
         ?.map((t: any) => t.plain_text)
         .join('\n')
         .split('\n')
-        .filter(point => point.trim() !== '') || [],
+        .filter((point: string) => point.trim() !== '') || [],
       techStack: props['Tech Stack']?.multi_select.map((t: any) => t.name) || [],
       github: props.GitHub?.url || '',
       demo: props.Demo?.url || ''
