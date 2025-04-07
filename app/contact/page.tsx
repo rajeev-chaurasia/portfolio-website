@@ -160,7 +160,7 @@ export default function ContactPage() {
                   animate={{ opacity: 1, y: 0 }}
                   className="mt-1 text-sm text-red-500 dark:text-red-400"
                 >
-                  {errors.name.message}
+                  {errors.name.message?.toString()}
                 </motion.p>
               )}
             </div>
@@ -181,7 +181,7 @@ export default function ContactPage() {
                   animate={{ opacity: 1, y: 0 }}
                   className="mt-1 text-sm text-red-500 dark:text-red-400"
                 >
-                  {errors.email.message}
+                  {errors.email.message?.toString()}
                 </motion.p>
               )}
             </div>
@@ -202,7 +202,7 @@ export default function ContactPage() {
                   animate={{ opacity: 1, y: 0 }}
                   className="mt-1 text-sm text-red-500 dark:text-red-400"
                 >
-                  {errors.message.message}
+                  {errors.message.message?.toString()}
                 </motion.p>
               )}
             </div>
@@ -223,7 +223,7 @@ export default function ContactPage() {
                   animate={{ opacity: 1, y: 0 }}
                   className="mt-1 text-sm text-red-500 dark:text-red-400"
                 >
-                  {errors.attachment.message}
+                  {errors.attachment.message?.toString()}
                 </motion.p>
               )}
             </div>
