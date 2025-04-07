@@ -12,7 +12,6 @@ interface Education {
   grade: string;
   coursework: string[];
   logo: string;
-  description: string;
 }
 
 interface EducationListProps {
@@ -69,11 +68,8 @@ export default function EducationList({ educationList }: EducationListProps) {
                 </div>
               </div>
               <div className="mt-4">
-                <p className="text-gray-600 dark:text-gray-300">
-                  {edu.description}
-                </p>
                 {edu.grade && (
-                  <p className="mt-2 text-gray-700 dark:text-gray-300 font-medium">
+                  <p className="text-gray-700 dark:text-gray-300 font-medium">
                     Grade: {edu.grade}
                   </p>
                 )}

@@ -1,6 +1,20 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
+// Validate required environment variables
+const requiredEnvVars = [
+  'SMTP_HOST',
+  'SMTP_USER',
+  'SMTP_PASS',
+  'CONTACT_RECEIVER_EMAIL'
+];
+
+for (const envVar of requiredEnvVars) {
+  if (!process.env[envVar]) {
+    throw new Error(`${envVar} is not set in environment variables`);
+  }
+}
+
 async function verifyCaptcha(token: string) {
   try {
     const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
@@ -28,11 +42,31 @@ export async function POST(request: Request) {
     const captchaToken = formData.get('captchaToken') as string | null;
     const attachment = formData.get('attachment') as File | null;
 
+    // Validate required fields
+    if (!name || !email || !message) {
+      return NextResponse.json(
+        { error: 'Name, email, and message are required' },
+        { status: 400 }
+      );
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { error: 'Invalid email format' },
+        { status: 400 }
+      );
+    }
+
     // Only verify captcha if secret key is configured
     if (process.env.RECAPTCHA_SECRET_KEY && captchaToken) {
       const isValidCaptcha = await verifyCaptcha(captchaToken);
       if (!isValidCaptcha) {
-        return NextResponse.json({ error: 'Invalid captcha' }, { status: 400 });
+        return NextResponse.json(
+          { error: 'Invalid captcha' },
+          { status: 400 }
+        );
       }
     }
 
@@ -46,6 +80,17 @@ export async function POST(request: Request) {
         pass: process.env.SMTP_PASS,
       },
     });
+
+    // Verify SMTP connection
+    try {
+      await transporter.verify();
+    } catch (error) {
+      console.error('SMTP connection error:', error);
+      return NextResponse.json(
+        { error: 'Error connecting to mail server' },
+        { status: 500 }
+      );
+    }
 
     // Prepare email options
     const mailOptions: nodemailer.SendMailOptions = {
