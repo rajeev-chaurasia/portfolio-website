@@ -94,9 +94,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.6 }}
             >
-              MS Software Engineering student at SJSU, specializing in distributed systems 
-              and enterprise applications. Passionate about building scalable solutions 
-              and exploring cutting-edge technologies.
+              I'm a Software Engineering graduate student at San Jose State University with prior professional experience as a Software Engineer at Tekion Corp. I'm passionate about building scalable backend systems, designing efficient microservices, and contributing to impactful full-stack applications.
             </motion.p>
 
             {/* Social Links */}

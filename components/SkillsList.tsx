@@ -3,9 +3,45 @@ import { motion } from 'framer-motion';
 import PageLayout from '@/components/PageLayout';
 import { 
   FaCode, 
-  FaServer, 
-  FaTools, 
+  FaTools,
+  FaDatabase,
+  FaCloud,
+  FaLaptopCode,
+  FaBrain,
+  FaExchangeAlt,
+  FaGraduationCap,
+  FaPalette,
+  FaJava,
+  FaMapMarkerAlt,
+  FaJira,
+  FaRocket,
+  FaSearch,
+  FaRobot,
+  FaTelegram,
 } from 'react-icons/fa';
+import { 
+  SiJavascript, 
+  SiTypescript, 
+  SiPython, 
+  SiReact, 
+  SiDocker, 
+  SiMongodb,
+  SiPostgresql,
+  SiRedis,
+  SiCplusplus,
+  SiAmazon,
+  SiGooglecloud,
+  SiGit,
+  SiSpring,
+  SiNextdotjs,
+  SiMysql,
+  SiPostman,
+  SiSwagger,
+  SiApachekafka,
+  SiIntellijidea,
+  SiHibernate,
+  SiFlask,
+} from 'react-icons/si';
 
 interface Skill {
   skill: string;
@@ -16,16 +52,108 @@ interface SkillsListProps {
   skills: Skill[];
 }
 
-const categoryIcons: Record<string, any> = {
-  'Development Technologies': FaServer,
-  'Programming': FaCode,
-  'Tools': FaTools
+// Enhanced skill icons mapping
+const skillIcons: Record<string, any> = {
+  'JavaScript': SiJavascript,
+  'TypeScript': SiTypescript,
+  'Python': SiPython,
+  'React': SiReact,
+  'Next.js': SiNextdotjs,
+  'Spring Boot': SiSpring,
+  'Docker': SiDocker,
+  'MongoDB': SiMongodb,
+  'PostgreSQL': SiPostgresql,
+  'MySQL': SiMysql,
+  'Redis': SiRedis,
+  'AWS': SiAmazon,
+  'Google Cloud': SiGooglecloud,
+  'Git': SiGit,
+  'SQL': FaDatabase,
+  'Java': FaJava,
+  'Google Maps API': FaMapMarkerAlt,
+  'JIRA': FaJira,
+  'RabbitMQ': FaRocket,
+  'React.js': SiReact,
+  'C++': SiCplusplus,
+  'ElasticSearch': FaSearch,
+  'CrewAI': FaRobot,
+  'Postman': SiPostman,
+  'Swagger / OpenAPI': SiSwagger,
+  'Kafka': SiApachekafka,
+  'IntelliJ IDEA': SiIntellijidea,
+  'Hibernate': SiHibernate,
+  'Python (Flask)': SiFlask,
+  'Telegram Bot API': FaTelegram,
+  'Serper API': FaSearch,
 };
 
-const categoryColors: Record<string, string> = {  
-  'Development Technologies': 'from-blue-500 to-blue-600',
-  'Programming': 'from-indigo-500 to-indigo-600',
-  'Tools': 'from-violet-500 to-violet-600'
+const categoryIcons: Record<string, any> = {
+  'Languages': FaLaptopCode,
+  'Backend & Frameworks': FaCode,
+  'Tools': FaTools,
+  'Databases': FaDatabase,
+  'Cloud & DevOps': FaCloud,
+  'AI/ML & Agentic AI': FaBrain,
+  'Messaging/Streams': FaExchangeAlt,
+  'Core Concepts': FaGraduationCap,
+  'Frontend': FaPalette
+};
+
+const categoryColors: Record<string, any> = {  
+  'Languages': {
+    bg: 'from-blue-500/20 to-indigo-500/20',
+    border: 'border-blue-200 dark:border-blue-800',
+    text: 'text-blue-700 dark:text-blue-300',
+    accent: 'bg-blue-500'
+  },
+  'Backend & Frameworks': {
+    bg: 'from-emerald-500/20 to-teal-500/20',
+    border: 'border-emerald-200 dark:border-emerald-800',
+    text: 'text-emerald-700 dark:text-emerald-300',
+    accent: 'bg-emerald-500'
+  },
+  'Frontend': {
+    bg: 'from-pink-500/20 to-rose-500/20',
+    border: 'border-pink-200 dark:border-pink-800',
+    text: 'text-pink-700 dark:text-pink-300',
+    accent: 'bg-pink-500'
+  },
+  'Tools & APIs': {
+    bg: 'from-purple-500/20 to-violet-500/20',
+    border: 'border-purple-200 dark:border-purple-800',
+    text: 'text-purple-700 dark:text-purple-300',
+    accent: 'bg-purple-500'
+  },
+  'Databases': {
+    bg: 'from-orange-500/20 to-red-500/20',
+    border: 'border-orange-200 dark:border-orange-800',
+    text: 'text-orange-700 dark:text-orange-300',
+    accent: 'bg-orange-500'
+  },
+  'Cloud & DevOps': {
+    bg: 'from-cyan-500/20 to-blue-500/20',
+    border: 'border-cyan-200 dark:border-cyan-800',
+    text: 'text-cyan-700 dark:text-cyan-300',
+    accent: 'bg-cyan-500'
+  },
+  'AI/ML & Agentic AI': {
+    bg: 'from-violet-500/20 to-purple-500/20',
+    border: 'border-violet-200 dark:border-violet-800',
+    text: 'text-violet-700 dark:text-violet-300',
+    accent: 'bg-violet-500'
+  },
+  'Messaging/Streams': {
+    bg: 'from-amber-500/20 to-yellow-500/20',
+    border: 'border-amber-200 dark:border-amber-800',
+    text: 'text-amber-700 dark:text-amber-300',
+    accent: 'bg-amber-500'
+  },
+  'Core Concepts': {
+    bg: 'from-slate-500/20 to-gray-500/20',
+    border: 'border-slate-200 dark:border-slate-800',
+    text: 'text-slate-700 dark:text-slate-300',
+    accent: 'bg-slate-500'
+  }
 };
 
 export default function SkillsList({ skills }: SkillsListProps) {
@@ -38,81 +166,105 @@ export default function SkillsList({ skills }: SkillsListProps) {
     return acc;
   }, {} as Record<string, Skill[]>);
 
+  const getDefaultColors = () => ({
+    bg: 'from-gray-500/20 to-slate-500/20',
+    border: 'border-gray-200 dark:border-gray-700',
+    text: 'text-gray-700 dark:text-gray-300',
+    accent: 'bg-gray-500'
+  });
+
   return (
     <PageLayout 
-      title="Skills" 
+      title="Skills & Technologies" 
       description="My technical expertise and capabilities"
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Skills Grid */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8"
         >
           {Object.entries(groupedSkills).map(([category, items], idx) => {
             const Icon = categoryIcons[category] || FaTools;
-            const gradient = categoryColors[category] || 'from-purple-500 to-purple-600';
+            const colors = categoryColors[category] || getDefaultColors();
             
             return (
               <motion.div 
                 key={idx}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                whileHover={{ 
-                  scale: 1.02,
-                  transition: { duration: 0.2 }
-                }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="relative group"
+                transition={{ duration: 0.6, delay: idx * 0.1 }}
+                className="group"
               >
-                <motion.div 
-                  className="absolute inset-0 bg-gradient-to-br opacity-5 group-hover:opacity-10 transition-opacity duration-300 rounded-xl"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.3 }}
-                />
-                <motion.div 
-                  className="relative p-6 rounded-xl border border-gray-300 dark:border-gray-700/50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm group-hover:shadow-lg transition-all duration-300 h-full"
-                  whileHover={{ 
-                    y: -5,
-                    transition: { duration: 0.2 }
-                  }}
-                >
-                  <div className="flex items-center gap-3 mb-4">
-                    <motion.div 
-                      className={`p-3 rounded-lg bg-gradient-to-br ${gradient} text-white shadow-md group-hover:shadow-lg transition-shadow duration-300`}
-                      whileHover={{ rotate: 5 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <Icon className="w-6 h-6" />
-                    </motion.div>
-                    <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 group-hover:text-primary dark:group-hover:text-primary-light transition-colors duration-300">
-                      {category}
-                    </h2>
+                <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${colors.bg} ${colors.border} border backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:scale-[1.02] hover:-translate-y-1`}>
+                  {/* Header */}
+                  <div className="p-6 pb-4">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className={`p-3 rounded-xl ${colors.accent} text-white shadow-lg`}>
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <h3 className={`text-lg sm:text-xl font-bold ${colors.text}`}>
+                          {category}
+                        </h3>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          {items.length} {items.length === 1 ? 'skill' : 'skills'}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex flex-wrap gap-2">
-                    {items.map((skill, i) => (
-                      <motion.span
-                        key={i}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        whileHover={{ 
-                          scale: 1.05,
-                          transition: { duration: 0.2 }
-                        }}
-                        transition={{ duration: 0.3, delay: i * 0.05 }}
-                        className={`px-4 py-2 rounded-full text-lg font-medium 
-                          bg-gradient-to-r ${gradient} text-white/90 dark:text-white/90
-                          hover:shadow-md transition-all duration-300`}
-                      >
-                        {skill.skill}
-                      </motion.span>
-                    ))}
+
+                  {/* Skills */}
+                  <div className="px-6 pb-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {items.map((skill, i) => {
+                        const SkillIcon = skillIcons[skill.skill];
+                        return (
+                          <motion.div
+                            key={i}
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.3, delay: (idx * 0.1) + (i * 0.05) }}
+                            whileHover={{ scale: 1.05 }}
+                            className="flex items-center gap-3 p-3 rounded-xl bg-white/50 dark:bg-gray-800/50 border border-white/20 dark:border-gray-700/20 hover:bg-white/80 dark:hover:bg-gray-700/50 transition-all duration-200"
+                          >
+                            {SkillIcon && (
+                              <SkillIcon className={`w-5 h-5 ${colors.text} flex-shrink-0`} />
+                            )}
+                            <span className={`text-sm font-medium ${colors.text} leading-tight`}>
+                              {skill.skill}
+                            </span>
+                          </motion.div>
+                        );
+                      })}
+                    </div>
                   </div>
-                </motion.div>
+
+                  {/* Decorative element */}
+                  <div className="absolute top-0 right-0 w-20 h-20 opacity-10">
+                    <div className={`w-full h-full rounded-bl-full ${colors.accent}`}></div>
+                  </div>
+                </div>
               </motion.div>
             );
           })}
+        </motion.div>
+
+        {/* Call to Action */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.8 }}
+          className="mt-16 text-center"
+        >
+          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20">
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              Always learning and exploring new technologies
+            </span>
+            <span className="text-lg">🚀</span>
+          </div>
         </motion.div>
       </div>
     </PageLayout>
