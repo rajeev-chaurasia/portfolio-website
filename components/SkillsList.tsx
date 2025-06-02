@@ -18,6 +18,15 @@ import {
   FaSearch,
   FaRobot,
   FaTelegram,
+  FaServer,
+  FaCogs,
+  FaLayerGroup,
+  FaNetworkWired,
+  FaUserShield,
+  FaChartLine,
+  FaLanguage,
+  FaProjectDiagram,
+  FaAws
 } from 'react-icons/fa';
 import { 
   SiJavascript, 
@@ -41,11 +50,17 @@ import {
   SiIntellijidea,
   SiHibernate,
   SiFlask,
+  SiElasticsearch,
+  SiAmazonec2,
+  SiAmazons3,
+  SiAwslambda,
+  SiGithubactions
 } from 'react-icons/si';
 
 interface Skill {
   skill: string;
   category: string;
+  order: number;
 }
 
 interface SkillsListProps {
@@ -54,37 +69,83 @@ interface SkillsListProps {
 
 // Enhanced skill icons mapping
 const skillIcons: Record<string, any> = {
+  // Languages
   'JavaScript': SiJavascript,
   'TypeScript': SiTypescript,
   'Python': SiPython,
-  'React': SiReact,
-  'Next.js': SiNextdotjs,
+  'Java': FaJava,
+  'SQL': FaDatabase,
+  'C++': SiCplusplus,
+  
+  // Backend & Frameworks
   'Spring Boot': SiSpring,
+  'Spring Data JPA': SiSpring,
+  'Hibernate': SiHibernate,
+  'JDBC': FaDatabase,
+  'Python (Flask)': SiFlask,
+  'Flask': SiFlask,
+  'Microservices Architecture': FaLayerGroup,
+  'REST APIs': FaNetworkWired,
+  'Design Patterns': FaProjectDiagram,
+  
+  // Frontend
+  'React': SiReact,
+  'React.js': SiReact,
+  'Next.js': SiNextdotjs,
+  
+  // Cloud & DevOps - AWS
+  'AWS': SiAmazon,
+  'Elastic Beanstalk': FaAws,
+  'EC2': SiAmazonec2,
+  'ELB': FaNetworkWired,
+  'ASG': FaCogs,
+  'ECR': SiDocker,
+  'Cognito': FaUserShield,
+  'Lambda': SiAwslambda,
+  'S3': SiAmazons3,
+  'SES': FaServer,
+  
+  // Cloud & DevOps
+  'Google Cloud (Vertex AI)': SiGooglecloud,
   'Docker': SiDocker,
-  'MongoDB': SiMongodb,
+  'CI/CD': FaCogs,
+  'Github Actions': SiGithubactions,
+  
+  // Databases
   'PostgreSQL': SiPostgresql,
   'MySQL': SiMysql,
+  'MongoDB': SiMongodb,
+  'ElasticSearch': SiElasticsearch,
   'Redis': SiRedis,
-  'AWS': SiAmazon,
-  'Google Cloud': SiGooglecloud,
-  'Git': SiGit,
-  'SQL': FaDatabase,
-  'Java': FaJava,
-  'Google Maps API': FaMapMarkerAlt,
-  'JIRA': FaJira,
-  'RabbitMQ': FaRocket,
-  'React.js': SiReact,
-  'C++': SiCplusplus,
-  'ElasticSearch': FaSearch,
+  
+  // AI/ML & Agentic AI
   'CrewAI': FaRobot,
-  'Postman': SiPostman,
-  'Swagger / OpenAPI': SiSwagger,
+  'Natural Language Understanding (NLU) concepts': FaLanguage,
+  'LLM integration (Google Vertex AI)': FaBrain,
+  
+  // Messaging/Streams
+  'RabbitMQ': FaRocket,
   'Kafka': SiApachekafka,
+  
+  // Core Concepts
+  'Object Oriented Programming (OOP)': FaCode,
+  'Object Oriented Programming': FaCode,
+  'OOP': FaCode,
+  'Data Structures & Algorithms': FaChartLine,
+  'Data Structures': FaChartLine,
+  'Algorithms': FaChartLine,
+  
+  // Tools & APIs
+  'Git': SiGit,
   'IntelliJ IDEA': SiIntellijidea,
-  'Hibernate': SiHibernate,
-  'Python (Flask)': SiFlask,
-  'Telegram Bot API': FaTelegram,
+  'Postman': SiPostman,
+  'JIRA': FaJira,
+  'Swagger/OpenAPI': SiSwagger,
+  'Swagger / OpenAPI': SiSwagger,
+  'OpenAPI': SiSwagger,
+  'Google Maps API': FaMapMarkerAlt,
   'Serper API': FaSearch,
+  'Telegram Bot API': FaTelegram
 };
 
 const categoryIcons: Record<string, any> = {
@@ -157,7 +218,7 @@ const categoryColors: Record<string, any> = {
 };
 
 export default function SkillsList({ skills }: SkillsListProps) {
-  // Group skills by category
+  // Group skills by category and sort by order within each category
   const groupedSkills = skills.reduce((acc, skill) => {
     if (!acc[skill.category]) {
       acc[skill.category] = [];
@@ -165,6 +226,27 @@ export default function SkillsList({ skills }: SkillsListProps) {
     acc[skill.category].push(skill);
     return acc;
   }, {} as Record<string, Skill[]>);
+
+  // Sort skills within each category by their order
+  Object.keys(groupedSkills).forEach(category => {
+    groupedSkills[category].sort((a, b) => a.order - b.order);
+  });
+
+  // Define the desired category order
+  const categoryOrder = [
+    'Languages',
+    'Backend & Frameworks',
+    'Frontend',
+    'Cloud & DevOps',
+    'Databases',
+    'AI/ML & Agentic AI',
+    'Messaging/Streams',
+    'Core Concepts',
+    'Tools & APIs'
+  ];
+
+  // Filter to only show categories that exist in the data and maintain order
+  const orderedCategories = categoryOrder.filter(category => groupedSkills[category]);
 
   const getDefaultColors = () => ({
     bg: 'from-gray-500/20 to-slate-500/20',
@@ -186,7 +268,7 @@ export default function SkillsList({ skills }: SkillsListProps) {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8"
         >
-          {Object.entries(groupedSkills).map(([category, items], idx) => {
+          {orderedCategories.map((category, idx) => {
             const Icon = categoryIcons[category] || FaTools;
             const colors = categoryColors[category] || getDefaultColors();
             
@@ -210,7 +292,7 @@ export default function SkillsList({ skills }: SkillsListProps) {
                           {category}
                         </h3>
                         <p className="text-sm text-gray-500 dark:text-gray-400">
-                          {items.length} {items.length === 1 ? 'skill' : 'skills'}
+                          {groupedSkills[category].length} {groupedSkills[category].length === 1 ? 'skill' : 'skills'}
                         </p>
                       </div>
                     </div>
@@ -218,9 +300,26 @@ export default function SkillsList({ skills }: SkillsListProps) {
 
                   {/* Skills */}
                   <div className="px-6 pb-6">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {items.map((skill, i) => {
+                    <div className="grid grid-cols-1 gap-3">
+                      {groupedSkills[category].map((skill, i) => {
+                        // Try exact match first, then trimmed, then partial matching
                         const SkillIcon = skillIcons[skill.skill];
+                        // let SkillIcon = skillIcons[skill.skill] || skillIcons[skill.skill.trim()];
+                        
+                        // // Fallback for partial matches
+                        // if (!SkillIcon) {
+                        //   const skillName = skill.skill.toLowerCase();
+                        //   if (skillName.includes('llm integration')) {
+                        //     SkillIcon = FaBrain;
+                        //   } else if (skillName.includes('natural language understanding') || skillName.includes('nlu')) {
+                        //     SkillIcon = FaLanguage;
+                        //   } else if (skillName.includes('crewai')) {
+                        //     SkillIcon = FaRobot;
+                        //   } else if (skillName.includes('object oriented programming') || skillName.includes('oop')) {
+                        //     SkillIcon = FaCode;
+                        //   }
+                        // }
+                        
                         return (
                           <motion.div
                             key={i}
@@ -233,7 +332,7 @@ export default function SkillsList({ skills }: SkillsListProps) {
                             {SkillIcon && (
                               <SkillIcon className={`w-5 h-5 ${colors.text} flex-shrink-0`} />
                             )}
-                            <span className={`text-sm font-medium ${colors.text} leading-tight`}>
+                            <span className={`text-sm font-medium ${colors.text} leading-tight break-words`}>
                               {skill.skill}
                             </span>
                           </motion.div>

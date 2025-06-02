@@ -11,12 +11,17 @@ export async function getSkills() {
     },
   });
 
-  // For each skill, extract the Skill name and the Category (as a single select value)
+  // For each skill, extract the Skill name, Category, and Order
   const skills = response.results.map((page: any) => {
     const props = page.properties;
+    
+    // Extract the full title by concatenating all text segments
+    const skillTitle = props.Skill?.title?.map((segment: any) => segment.plain_text).join('') || '';
+    
     return {
-      skill: props.Skill?.title[0]?.plain_text || '',
+      skill: skillTitle,
       category: props.Category?.select?.name || 'Uncategorized',
+      order: props.Order?.number || 999, // Default high number for items without order
     };
   });
   return skills;

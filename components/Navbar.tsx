@@ -20,7 +20,6 @@ import { usePathname } from 'next/navigation';
 
 const navItems = [
   { name: 'Home', path: '/', icon: FaHome },
-  { name: 'About', path: '/about', icon: FaUser },
   { name: 'Education', path: '/education', icon: FaGraduationCap },
   { name: 'Experience', path: '/experience', icon: FaBriefcase },
   { name: 'Projects', path: '/projects', icon: FaProjectDiagram },
