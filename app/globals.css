@@ -3,101 +3,128 @@
 @tailwind utilities;
 
 :root {
-  --primary: #3B82F6; /* Blue for light mode */
-  --primary-light: #81C784; /* Green for dark mode */
-  --secondary: #FF9800;
-  --accent: #FFC107;
+  --color-bg: 250 250 252;
+  --color-surface: 255 255 255;
+  --color-border: 230 232 240;
+  --color-fg: 22 25 43;
+  --color-muted: 75 84 112;
+  --color-subtle: 90 99 120;
+  --color-accent: 15 118 110;
+  --color-accent2: 124 58 237;
+  --color-aurora-a: 94 234 212;
+  --color-aurora-b: 167 139 250;
+  --color-aurora-c: 244 114 182;
+}
+
+.dark {
+  --color-bg: 10 14 26;
+  --color-surface: 17 24 43;
+  --color-border: 34 42 66;
+  --color-fg: 232 236 248;
+  --color-muted: 148 160 190;
+  --color-subtle: 128 140 170;
+  --color-accent: 94 234 212;
+  --color-accent2: 167 139 250;
+  --color-aurora-a: 45 212 191;
+  --color-aurora-b: 139 92 246;
+  --color-aurora-c: 236 72 153;
 }
 
 @layer base {
   body {
-    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300;
+    @apply bg-background text-muted antialiased;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    @apply bg-accent/20 text-foreground;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--color-accent));
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--color-bg));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--color-border));
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--color-subtle));
   }
 }
 
-@layer components {
-  .btn-primary {
-    @apply bg-primary dark:bg-primary-light text-white px-4 py-2 rounded-lg 
-           hover:bg-opacity-90 dark:hover:bg-opacity-90 transition-all 
-           duration-300 transform hover:scale-105 active:scale-95;
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-accent to-accent2 bg-clip-text text-transparent;
   }
 
-  .card {
-    @apply bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 
-           transition-all duration-300 hover:shadow-xl 
-           border border-gray-200 dark:border-gray-700;
+  /* Aurora glow blobs — pure CSS, GPU-friendly, gated on reduced motion. */
+  .aurora-blob {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(90px);
+    opacity: 0.28;
+    pointer-events: none;
+    will-change: transform;
   }
 
-  .input-field {
-    @apply w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 
-           bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100
-           focus:ring-2 focus:ring-primary dark:focus:ring-primary-light 
-           focus:border-transparent outline-none transition-all duration-300;
+  .dark .aurora-blob {
+    opacity: 0.2;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .aurora-drift-1 {
+      animation: aurora-drift-1 11s ease-in-out infinite alternate;
+    }
+    .aurora-drift-2 {
+      animation: aurora-drift-2 13s ease-in-out infinite alternate;
+    }
+    .aurora-drift-3 {
+      animation: aurora-drift-3 9s ease-in-out infinite alternate;
+    }
   }
 }
 
-/* Custom Animations */
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-/* Smooth Scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark:bg-gray-800;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400 dark:bg-gray-500;
-}
-
-/* Gradient Text */
-.gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-light;
-}
-
-/* Glass Effect */
-.glass {
-  @apply bg-white/80 dark:bg-gray-800/80 backdrop-blur-md;
-}
-
-/* Hover Effects */
-.hover-lift {
-  @apply transition-transform duration-300 hover:-translate-y-1;
-}
-
-/* Custom Shadows */
-.shadow-custom {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-/* Responsive Typography */
-@screen md {
-  h1 {
-    @apply text-4xl;
+@keyframes aurora-drift-1 {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
   }
-  h2 {
-    @apply text-3xl;
+  to {
+    transform: translate3d(6%, 8%, 0) scale(1.15);
   }
-  h3 {
-    @apply text-2xl;
+}
+
+@keyframes aurora-drift-2 {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.1);
+  }
+  to {
+    transform: translate3d(-7%, -5%, 0) scale(0.95);
+  }
+}
+
+@keyframes aurora-drift-3 {
+  from {
+    transform: translate3d(0, 0, 0) scale(0.95);
+  }
+  to {
+    transform: translate3d(4%, -7%, 0) scale(1.1);
   }
 }

@@ -1,0 +1,12 @@
+company: "NVIDIA"
+role: "Software Engineering Intern"
+location: "Santa Clara, USA"
+startDate: "2026-05-26"
+endDate: null
+description:
+  - "Built Ripple, a dependency-aware CI test-selection system for NVIDIA Omniverse Mega that defers a test only when deterministic evidence proves the change cannot affect it."
+  - "Modeled the full dependency picture in a typed graph, covering Python imports, Docker build stages, Helm configuration, payload assets, and dynamically generated GPU simulation jobs."
+  - "Designed a fail-closed authorization flow using sealed decision manifests and plan-versus-execution reconciliation, then rolled it out through GitLab CI in shadow mode with kill switches and per-MR impact reports."
+  - "Validated the planner by replaying 628 historical merge requests (20,724 CI decisions), projecting 2,105 GPU-hours saved and a 41.3% deferral rate with zero unsafe skips in the audited results."
+  - "Started extending the source-impact analysis to Omniverse Kit, adding Python and C/C++ dependency adapters that run in shadow mode."
+logo: "/images/logos/nvidia.svg"

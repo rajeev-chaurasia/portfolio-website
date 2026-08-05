@@ -1,0 +1,10 @@
+company: "Tekion Corp"
+role: "Engineering Intern"
+location: "Bengaluru, India"
+startDate: "2022-01-01"
+endDate: "2022-06-01"
+description:
+  - "Developed and enhanced a Test Case Management System, enabling efficient test case and results management for the QA team."
+  - "Implemented Jira integration to enhance project management and traceability."
+  - "Learned about effective teamwork, taking ownership of my work, debugging code efficiently, and applying industry-standard coding practices."
+logo: "/images/logos/tekion.png"

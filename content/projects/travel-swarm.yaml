@@ -1,0 +1,23 @@
+repo: "travel-swarm"
+title: "TravelSwarm — Intelligent Travel Planning Assistant"
+bullets:
+  - "Built an intelligent Telegram bot for personalized travel itineraries using NLU, CrewAI (Vertex AI), RabbitMQ, and PostgreSQL."
+  - "Architected the full-stack system (Telegram bot, Spring Boot backend, Python AI agents), implementing conversational flow and a hierarchical CrewAI agent team for planning/NLU."
+  - "Integrated Google Vertex AI, established RabbitMQ for asynchronous communication, containerized services (Docker/Compose), and developed core APIs (Flask NLU, Spring Data JPA)."
+techStack:
+  - "Java"
+  - "Spring Boot"
+  - "Python"
+  - "Flask"
+  - "CrewAI"
+  - "Google Vertex AI (Gemini Flash)"
+  - "RabbitMQ"
+  - "PostgreSQL"
+  - "Docker"
+  - "Telegram Bot API"
+  - "Google Maps API"
+  - "Serper API"
+github: "https://github.com/rajeevchaurasia-sjsu/travel-swarm-app"
+demo: ""
+order: 2
+featured: false
