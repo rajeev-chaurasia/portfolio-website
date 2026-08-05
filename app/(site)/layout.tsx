@@ -1,7 +1,7 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { getSite } from '@/lib/keystatic';
-import { RESUME_FALLBACK } from '@/lib/site';
+import { resumeHref } from '@/lib/site';
 
 export default async function SiteLayout({
   children,
@@ -17,7 +17,7 @@ export default async function SiteLayout({
       >
         Skip to content
       </a>
-      <Header resumeHref={site.resume ?? RESUME_FALLBACK} />
+      <Header resumeHref={resumeHref(site)} />
       {children}
       <Footer site={site} />
     </>

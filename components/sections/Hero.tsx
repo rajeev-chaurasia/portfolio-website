@@ -1,6 +1,6 @@
 import type { Site } from '@/lib/keystatic';
 import { splitSentences } from '@/lib/format';
-import { RESUME_FALLBACK } from '@/lib/site';
+import { resumeHref } from '@/lib/site';
 import Button from '@/components/ui/Button';
 import SocialLinks from '@/components/ui/SocialLinks';
 import Reveal from '@/components/motion/Reveal';
@@ -38,11 +38,7 @@ export default function Hero({ site }: { site: Site }) {
           <Reveal delay={0.3}>
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Button href="#projects">View my work</Button>
-              <Button
-                variant="secondary"
-                href={site.resume ?? RESUME_FALLBACK}
-                download
-              >
+              <Button variant="secondary" href={resumeHref(site)} download>
                 Download resume
               </Button>
             </div>

@@ -14,6 +14,7 @@ export type Site = {
   linkedin: string;
   profileImage: string | null;
   resume: string | null;
+  resumeUrl: string;
 };
 
 export type ExperienceEntry = {
@@ -78,6 +79,7 @@ export const getSite = cache(async (): Promise<Site> => {
     linkedin: site.linkedin ?? '',
     profileImage: site.profileImage ?? null,
     resume: site.resume ?? null,
+    resumeUrl: site.resumeUrl ?? '',
   };
 });
 

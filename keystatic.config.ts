@@ -32,9 +32,14 @@ export default config({
           publicPath: '/images/',
         }),
         resume: fields.file({
-          label: 'Resume (PDF)',
+          label: 'Resume (PDF upload)',
           directory: 'public/files',
           publicPath: '/files/',
+        }),
+        resumeUrl: fields.url({
+          label: 'Resume URL',
+          description:
+            'Optional external link (e.g. Google Drive). Takes precedence over the uploaded PDF — handy for swapping the resume without a deploy.',
         }),
       },
     }),

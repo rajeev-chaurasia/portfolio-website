@@ -1,10 +1,12 @@
 import { getSite } from '@/lib/keystatic';
-import { RESUME_FALLBACK, SITE_URL } from '@/lib/site';
+import { resumeHref, SITE_URL } from '@/lib/site';
 
 export const dynamic = 'force-static';
 
 export async function GET() {
   const site = await getSite();
+  const resume = resumeHref(site);
+  const resumeLink = resume.startsWith('http') ? resume : `${SITE_URL}${resume}`;
   const lines = [
     `# ${site.name}`,
     '',
@@ -13,7 +15,7 @@ export async function GET() {
     '## Profile',
     '',
     `- [Portfolio](${SITE_URL}/): About, experience, projects, skills, education, and contact`,
-    `- [Resume (PDF)](${SITE_URL}${site.resume ?? RESUME_FALLBACK}): Full resume`,
+    `- [Resume (PDF)](${resumeLink}): Full resume`,
     '',
     '## Optional',
     '',
