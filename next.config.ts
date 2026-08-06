@@ -9,10 +9,13 @@ const SECTION_REDIRECTS = [
 ] as const;
 
 const nextConfig: NextConfig = {
-  // The Keystatic admin routes render on demand, and the root layout's
-  // metadata reads content/*.yaml at request time — make sure those files
-  // are traced into the serverless bundles.
+  // The Keystatic reader loads content/*.yaml with dynamic fs reads that
+  // static tracing can't see, and every server-rendered route needs them
+  // (the home page re-renders on ISR revalidation and cache-bypassing
+  // crawls, not just at build). Trace them into all route bundles.
   outputFileTracingIncludes: {
+    '/**': ['./content/**/*'],
+    '/': ['./content/**/*'],
     '/keystatic/[[...params]]': ['./content/**/*'],
     '/api/keystatic/[...params]': ['./content/**/*'],
   },
