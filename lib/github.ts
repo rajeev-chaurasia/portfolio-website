@@ -25,6 +25,36 @@ type GitHubRepo = {
 
 const REPOS_URL = `https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=pushed`;
 
+function apiHeaders(): HeadersInit {
+  return {
+    Accept: 'application/vnd.github+json',
+    ...(process.env.GITHUB_TOKEN
+      ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` }
+      : {}),
+  };
+}
+
+function parseRepoUrl(url: string): { owner: string; repo: string } | null {
+  const match = url.match(/github\.com\/([^/]+)\/([^/#?]+)/);
+  return match
+    ? { owner: match[1], repo: match[2].replace(/\.git$/, '') }
+    : null;
+}
+
+/** Fetch a single repo from any owner/org; null on failure (private, 404, downtime). */
+async function fetchRepo(owner: string, repo: string): Promise<GitHubRepo | null> {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
+      headers: apiHeaders(),
+      next: { revalidate: 3600 },
+    });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
 /** 'sj-hopes' → 'Sj Hopes' */
 function prettifyRepoName(name: string): string {
   return name
@@ -34,7 +64,7 @@ function prettifyRepoName(name: string): string {
     .join(' ');
 }
 
-/** Overrides that match no fetched repo become standalone projects. */
+/** Fallback for overrides whose repo can't be fetched (private or offline). */
 function projectFromOverride(override: ProjectOverride): MergedProject {
   return {
     name: override.title || prettifyRepoName(override.slug),
@@ -101,15 +131,7 @@ export async function getProjects(): Promise<MergedProject[]> {
   try {
     const [overrides, res] = await Promise.all([
       overridesPromise,
-      fetch(REPOS_URL, {
-        headers: {
-          Accept: 'application/vnd.github+json',
-          ...(process.env.GITHUB_TOKEN
-            ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` }
-            : {}),
-        },
-        next: { revalidate: 3600 },
-      }),
+      fetch(REPOS_URL, { headers: apiHeaders(), next: { revalidate: 3600 } }),
     ]);
 
     if (!res.ok) {
@@ -133,9 +155,21 @@ export async function getProjects(): Promise<MergedProject[]> {
       };
     });
 
-    const standalone = overrides
-      .filter((o) => !matchedSlugs.has(o.slug))
-      .map((o) => ({ project: projectFromOverride(o), pushedAt: '' }));
+    // Overrides that match none of the user's repos point at repos in other
+    // accounts/orgs — fetch each one directly so they get live data too.
+    const standalone = await Promise.all(
+      overrides
+        .filter((o) => !matchedSlugs.has(o.slug))
+        .map(async (o) => {
+          const parsed = o.github ? parseRepoUrl(o.github) : null;
+          const repo = parsed
+            ? await fetchRepo(parsed.owner, parsed.repo)
+            : null;
+          return repo
+            ? { project: mergeRepo(repo, o), pushedAt: repo.pushed_at ?? '' }
+            : { project: projectFromOverride(o), pushedAt: '' };
+        })
+    );
 
     return sortProjects([...merged, ...standalone]);
   } catch (error) {
