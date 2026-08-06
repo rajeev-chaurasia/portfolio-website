@@ -62,6 +62,9 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     robots: { index: true, follow: true },
     alternates: { canonical: '/' },
+    verification: {
+      google: 'lHs2kvIZBhvzj8Jw6CCIB2i-jLCSPajqIl_jUIDq3-Y',
+    },
   };
 }
 
