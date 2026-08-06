@@ -23,3 +23,4 @@ description:
   - >-
     Started extending the source-impact analysis to Omniverse Kit, adding Python
     and C/C++ dependency adapters that run in shadow mode.
+logo: /images/logos/nvidia-software-engineering-intern/logo.jpg
