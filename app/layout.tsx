@@ -27,7 +27,17 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const site = await getSite();
+  let site;
+  try {
+    site = await getSite();
+  } catch {
+    // Never let a content-read failure take down a whole route.
+    return {
+      metadataBase: new URL(SITE_URL),
+      title: 'Rajeev Ranjan Chaurasia',
+      robots: { index: true, follow: true },
+    };
+  }
   const title = `${site.name} — ${site.tagline}`;
 
   return {
