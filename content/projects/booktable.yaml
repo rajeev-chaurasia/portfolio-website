@@ -1,0 +1,26 @@
+repo: "booktable"
+title: "BookTable — Restaurant Booking System"
+bullets:
+  - "Developed a full-stack restaurant booking system for Software Systems Engineering course."
+  - "Engineered backend deployment on AWS Elastic Beanstalk (Docker, ECR) with a GitHub Actions CI/CD pipeline (JaCoCo); implemented secure user authentication using AWS Cognito (OTP via Lambda)."
+  - "Built core backend features (MySQL spatial search, booking logic, AWS SES emails) and full-stack manager & user portals (React/Next.js) with secure S3 image uploads."
+techStack:
+  - "Java"
+  - "Spring Boot"
+  - "Next.js"
+  - "React"
+  - "Docker"
+  - "GitHub Actions"
+  - "JaCoCo"
+  - "MySQL (Spatial)"
+  - "Google Maps API"
+  - "Thymeleaf"
+  - "AWS Elastic Beanstalk"
+  - "AWS EC2"
+  - "AWS Lambda"
+  - "AWS S3"
+  - "AWS SES"
+github: "https://github.com/gopinathsjsu/team-project-20201-synergy"
+demo: ""
+order: 3
+featured: false

@@ -1,0 +1,9 @@
+company: "TechNineties"
+role: "Software Development Intern"
+location: "Remote"
+startDate: "2021-06-01"
+endDate: "2021-08-01"
+description:
+  - "Developed React-Native mobile application for hyperlocal marketplace project called 'Nazdik'."
+  - "Integrated features for Sellers to create online store along with inventory management, customers' order and transactions management and manage client statistics and logistics."
+logo: "/images/logos/technineties.png"

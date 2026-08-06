@@ -1,0 +1,10 @@
+company: "Tekion Corp"
+role: "Software Engineer"
+location: "Bengaluru, India"
+startDate: "2024-01-01"
+endDate: "2024-12-01"
+description:
+  - "Enhanced the Enterprise Accounting application for hierarchical dealership structures by centralising task management and financial reporting; this involved implementing asynchronous operations, ensuring real-time data synchronisation across franchises, mitigating race conditions with optimistic locking, and optimising data retrieval pathways for improved performance and accuracy."
+  - "Played an active role in product discussions, contributing insights and technical perspectives to help shape feature designs that effectively solved customer problems and led to better user adoption."
+  - "Played a pivotal role in defining technical solutions by actively contributing to high-level design (HLD) and low-level design (LLD) discussions for critical features, successfully driving their end-to-end development and delivery."
+logo: "/images/logos/tekion.png"
