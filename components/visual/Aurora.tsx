@@ -21,7 +21,8 @@ export default function Aurora({
     <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
       <div className="aurora-blob aurora-drift-1 bg-aurora-a -left-[5%] top-[15%] h-96 w-96" />
       <div className="aurora-blob aurora-drift-2 bg-aurora-b right-[0%] top-[10%] h-[28rem] w-[28rem]" />
-      <div className="aurora-blob aurora-drift-3 bg-aurora-c left-[35%] bottom-[5%] h-80 w-80" />
+      {/* Third layer is desktop-only: each blob is a large GPU texture. */}
+      <div className="aurora-blob aurora-drift-3 bg-aurora-c left-[35%] bottom-[5%] hidden h-80 w-80 sm:block" />
     </div>
   );
 }
