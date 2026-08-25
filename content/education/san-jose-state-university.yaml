@@ -3,10 +3,11 @@ degree: "M.S. in Software Engineering"
 location: "San Jose, USA"
 startDate: "2025-01-01"
 endDate: null
-grade: "3.93/4"
+grade: "3.91/4"
 coursework:
   - "Enterprise Distributed Systems"
   - "Enterprise Software Platforms"
   - "Artificial Intelligence and Data Engineering"
   - "Software Systems Engineering"
+  - "Software Security Technologies"
 logo: "/images/logos/sjsu.png"

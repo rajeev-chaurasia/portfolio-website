@@ -1,4 +1,5 @@
 import type {
+  CredentialEntry,
   EducationEntry,
   ExperienceEntry,
   Site,
@@ -15,7 +16,8 @@ export function buildProfileJsonLd(
   site: Site,
   education: EducationEntry[],
   experience: ExperienceEntry[],
-  skills: SkillGroup[]
+  skills: SkillGroup[],
+  credentials: CredentialEntry[] = []
 ): object {
   const currentRole = experience.find((e) => e.endDate === null);
   const nameParts = site.name.split(' ');
@@ -52,6 +54,28 @@ export function buildProfileJsonLd(
       name: e.institution,
     })),
   };
+
+  const certifications = credentials.filter((c) => c.kind === 'certification');
+  if (certifications.length > 0) {
+    person.hasCredential = certifications.map((c) => ({
+      '@type': 'EducationalOccupationalCredential',
+      name: c.title,
+      credentialCategory: 'certificate',
+      ...(c.issuer
+        ? { recognizedBy: { '@type': 'Organization', name: c.issuer } }
+        : {}),
+      ...(c.issuedDate ? { dateCreated: c.issuedDate } : {}),
+      ...(c.expiryDate ? { expires: c.expiryDate } : {}),
+      ...(c.url ? { url: c.url } : {}),
+    }));
+  }
+
+  const awards = credentials.filter((c) => c.kind === 'award');
+  if (awards.length > 0) {
+    person.award = awards.map((a) =>
+      a.issuer ? `${a.title} — ${a.issuer}` : a.title
+    );
+  }
 
   return {
     '@context': 'https://schema.org',

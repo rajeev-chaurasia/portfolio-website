@@ -55,6 +55,14 @@ async function fetchRepo(owner: string, repo: string): Promise<GitHubRepo | null
   }
 }
 
+/** Live star count for an 'owner/name' repo; null when it can't be fetched. */
+export async function getRepoStars(fullName: string): Promise<number | null> {
+  const [owner, repo] = fullName.split('/');
+  if (!owner || !repo) return null;
+  const found = await fetchRepo(owner, repo);
+  return found ? found.stargazers_count : null;
+}
+
 /** 'sj-hopes' → 'Sj Hopes' */
 function prettifyRepoName(name: string): string {
   return name
@@ -83,13 +91,17 @@ function mergeRepo(
   override: ProjectOverride | undefined
 ): MergedProject {
   const topics = (repo.topics ?? []).filter((t) => t !== 'portfolio');
+  // GitHub lowercases topics, so a 'python' topic and a 'Python' language are
+  // the same tag spelled two ways — keep the topic and drop the duplicate.
+  const seen = new Set(topics.map((t) => t.toLowerCase()));
   const tags =
     override && override.techStack.length > 0
       ? override.techStack
       : [
-          ...new Set(
-            [...topics, repo.language].filter((t): t is string => Boolean(t))
-          ),
+          ...topics,
+          ...(repo.language && !seen.has(repo.language.toLowerCase())
+            ? [repo.language]
+            : []),
         ];
 
   return {

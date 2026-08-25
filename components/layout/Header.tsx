@@ -105,8 +105,9 @@ export default function Header({ resumeHref }: { resumeHref: string }) {
           RRC
         </Link>
 
-        {/* Desktop navigation */}
-        <div className="hidden items-center gap-6 md:flex">
+        {/* Desktop navigation. Eight nav items only clear the logo, resume button
+            and theme toggle from lg up, so the mobile menu covers md too. */}
+        <div className="hidden items-center gap-6 lg:flex">
           <nav aria-label="Primary">
             <ul className="flex items-center gap-6">
               {SECTIONS.map(({ id, label }) => (
@@ -151,7 +152,7 @@ export default function Header({ resumeHref }: { resumeHref: string }) {
         </div>
 
         {/* Mobile controls */}
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-2 lg:hidden">
           <ThemeToggle />
           <button
             ref={hamburgerRef}
@@ -183,7 +184,7 @@ export default function Header({ resumeHref }: { resumeHref: string }) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: reduceMotion ? 0 : 0.2 }}
-              className="fixed inset-0 z-40 bg-background/80 md:hidden"
+              className="fixed inset-0 z-40 bg-background/80 lg:hidden"
             />
             <motion.div
               key="panel"
@@ -196,7 +197,7 @@ export default function Header({ resumeHref }: { resumeHref: string }) {
               animate={reduceMotion ? { opacity: 1 } : { x: 0 }}
               exit={reduceMotion ? { opacity: 0 } : { x: '100%' }}
               transition={{ duration: reduceMotion ? 0 : 0.25, ease: 'easeOut' }}
-              className="fixed inset-y-0 right-0 z-50 flex h-full w-full max-w-xs flex-col border-l border-border bg-background px-8 py-6 md:hidden"
+              className="fixed inset-y-0 right-0 z-50 flex h-full w-full max-w-xs flex-col border-l border-border bg-background px-8 py-6 lg:hidden"
             >
               <div className="flex justify-end">
                 <button

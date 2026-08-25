@@ -1,12 +1,19 @@
-import type { EducationEntry } from '@/lib/keystatic';
+import type { CredentialEntry, EducationEntry } from '@/lib/keystatic';
 import { formatDateRange } from '@/lib/format';
 import { countryFromLocation } from '@/lib/location';
 import { sectionIndex } from '@/lib/sections';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Reveal from '@/components/motion/Reveal';
 import JourneyTimeline, { type JourneyItem } from '@/components/journey/JourneyTimeline';
+import Credentials from '@/components/sections/Credentials';
 
-export default function Education({ items }: { items: EducationEntry[] }) {
+export default function Education({
+  items,
+  credentials,
+}: {
+  items: EducationEntry[];
+  credentials: CredentialEntry[];
+}) {
   const timelineItems: JourneyItem[] = items.map((e) => ({
     key: `edu-${e.slug}`,
     kind: 'education' as const,
@@ -32,11 +39,14 @@ export default function Education({ items }: { items: EducationEntry[] }) {
         <Reveal>
           <SectionHeading
             index={sectionIndex('education')}
-            title="Education"
+            title="Education & Credentials"
             id="education-heading"
           />
         </Reveal>
         <JourneyTimeline items={timelineItems} />
+        <Reveal>
+          <Credentials items={credentials} />
+        </Reveal>
       </div>
     </section>
   );

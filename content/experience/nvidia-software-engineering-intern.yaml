@@ -5,22 +5,21 @@ startDate: 2026-05-26
 endDate: 2026-08-14
 description:
   - >-
-    Built Ripple, a dependency-aware CI test-selection system for NVIDIA
-    Omniverse Mega that defers a test only when deterministic evidence proves
-    the change cannot affect it.
+    Owned the design and delivery of a dependency-aware CI test-selection system
+    in GitLab CI/CD for NVIDIA's Omniverse Mega robotics simulation platform,
+    adding an LLM layer that proposes file-to-test relationships static analysis
+    alone could not see.
   - >-
-    Modeled the full dependency picture in a typed graph, covering Python
-    imports, Docker build stages, Helm configuration, payload assets, and
-    dynamically generated GPU simulation jobs.
+    Validated the system two independent ways before it touched production:
+    replayed 628 historical merge requests, then ran a controlled comparison
+    with the system disabled and enabled that measured a 50.5% reduction in
+    executed job time.
   - >-
-    Designed a fail-closed authorization flow using sealed decision manifests
-    and plan-versus-execution reconciliation, then rolled it out through GitLab
-    CI in shadow mode with kill switches and per-MR impact reports.
+    Extended the source-impact analysis to a second internal team's codebase,
+    Omniverse Kit, adding Clang-based C++ analysis alongside the existing Python
+    analysis on an entirely different build architecture.
   - >-
-    Validated the planner by replaying 628 historical merge requests (20,724 CI
-    decisions), projecting 2,105 GPU-hours saved and a 41.3% deferral rate with
-    zero unsafe skips in the audited results.
-  - >-
-    Started extending the source-impact analysis to Omniverse Kit, adding Python
-    and C/C++ dependency adapters that run in shadow mode.
+    Contributed to an org-level Omniverse initiative exposing internal
+    capabilities as open-source, agent-compatible libraries, working on API and
+    interface design as part of a multi-contributor effort.
 logo: /images/logos/nvidia-software-engineering-intern/logo.jpg

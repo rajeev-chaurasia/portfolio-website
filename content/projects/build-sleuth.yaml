@@ -1,4 +1,7 @@
 repo: "build-sleuth"
+bullets:
+  - "Reads a failing GitHub Actions run, classifies the failure, ranks the culprit files, and opens a draft pull request only after the patch applies and the original job passes on a rerun inside a container."
+  - "Measured 0.915 accuracy over 71 hand-labeled cases against a 0.218 regex baseline, on an evaluation harness whose negative control reruns every maintainer fix alongside a deliberately corrupted copy."
 github: "https://github.com/rajeev-chaurasia/build-sleuth"
-order: 4
-featured: false
+order: 1
+featured: true

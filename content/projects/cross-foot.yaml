@@ -1,4 +1,7 @@
 repo: "cross-foot"
+bullets:
+  - "Routes each document to deterministic extractors or a vision LLM by signature, reaching 96.02% auto-accept precision at 6.38% human review across 1,880 held-out fields."
+  - "Multi-provider LLM infrastructure with token-bucket rate limiting and capability-filtered spillover, backed by an append-only cost ledger that recovered 97.1% of injected discrepancy dollars end to end."
 github: "https://github.com/rajeev-chaurasia/cross-foot"
-order: 3
+order: 2
 featured: true

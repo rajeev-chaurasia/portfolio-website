@@ -1,0 +1,9 @@
+repo: "leak-proof"
+title: "leakproof"
+bullets:
+  - "Finds credentials across full git history and decides which are real offline, with no call to any provider: CRC32 and key-parse proofs where the format allows one, and a published confidence table where it does not."
+  - "100% precision and recall over 145 credentials planted in source, from a generated corpus of 295 plants and 30 decoys, with fixture, vendored and documentation paths graded separately."
+  - "Keeps its own worst regression in the commit log rather than tidying it away: an earlier build treated “this JWT decodes” as “this JWT is live”, which made 32 of 33 confirmed findings wrong."
+github: "https://github.com/rajeev-chaurasia/leak-proof"
+order: 3
+featured: true

@@ -46,6 +46,40 @@ export type SkillGroup = {
   skills: string[];
 };
 
+export type ContributionItem = {
+  title: string;
+  url: string;
+  status: 'merged' | 'open';
+  detail: string;
+};
+
+export type ContributionEntry = {
+  slug: string;
+  project: string;
+  org: string;
+  repo: string;
+  url: string;
+  tagline: string;
+  summary: string;
+  techStack: string[];
+  prsUrl: string;
+  items: ContributionItem[];
+  order: number;
+};
+
+export type CredentialEntry = {
+  slug: string;
+  title: string;
+  kind: 'certification' | 'award';
+  issuer: string;
+  issuedDate: string;
+  expiryDate: string | null;
+  summary: string;
+  url: string;
+  skills: string[];
+  order: number;
+};
+
 export type ProjectOverride = {
   slug: string;
   title: string;
@@ -131,6 +165,53 @@ export const getSkills = cache(async (): Promise<SkillGroup[]> => {
       .sort((a, b) => a.order - b.order)
       .map((s) => s.name),
   })).filter((group) => group.skills.length > 0);
+});
+
+const byOrder = (a: { order: number }, b: { order: number }): number =>
+  a.order - b.order;
+
+export const getContributions = cache(
+  async (): Promise<ContributionEntry[]> => {
+    const entries = await reader.collections.contributions.all();
+    return entries
+      .map(({ slug, entry }) => ({
+        slug,
+        project: entry.project,
+        org: entry.org ?? '',
+        repo: entry.repo ?? '',
+        url: entry.url ?? '',
+        tagline: entry.tagline ?? '',
+        summary: entry.summary ?? '',
+        techStack: cleanStrings(entry.techStack),
+        prsUrl: entry.prsUrl ?? '',
+        items: entry.items.map((item) => ({
+          title: item.title,
+          url: item.url ?? '',
+          status: item.status,
+          detail: item.detail ?? '',
+        })),
+        order: entry.order ?? 99,
+      }))
+      .sort(byOrder);
+  }
+);
+
+export const getCredentials = cache(async (): Promise<CredentialEntry[]> => {
+  const entries = await reader.collections.credentials.all();
+  return entries
+    .map(({ slug, entry }) => ({
+      slug,
+      title: entry.title,
+      kind: entry.kind,
+      issuer: entry.issuer ?? '',
+      issuedDate: entry.issuedDate ?? '',
+      expiryDate: entry.expiryDate ?? null,
+      summary: entry.summary ?? '',
+      url: entry.url ?? '',
+      skills: cleanStrings(entry.skills),
+      order: entry.order ?? 99,
+    }))
+    .sort(byOrder);
 });
 
 export const getProjectOverrides = cache(

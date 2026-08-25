@@ -1,7 +1,7 @@
 repo: "sj-hopes"
 title: "SJ Hopes — Connecting Shelter and Support"
 bullets:
-  - "Award-winning (SJ Hacks - 2nd Prize) full-stack app for homelessness, featuring real-time shelter visibility, client/task management, and admin analytics."
+  - "Winner of the Best for Homelessness track at SJHacks 2025: a full-stack app with real-time shelter visibility, client/task management, and admin analytics."
   - "Engineered the core backend (Java/Spring Boot) with REST APIs and service logic for shelter, task, and client management, including reservations and status updates."
   - "Developed key frontend UI/UX (React/Next.js) for client registration, shelter/task operations, and the admin analytics dashboard components."
 techStack:
@@ -15,5 +15,5 @@ techStack:
   - "React.js"
 github: "https://github.com/rajeev-chaurasia/sj-hopes"
 demo: "https://devpost.com/software/sj-hopes"
-order: 8
+order: 22
 featured: false

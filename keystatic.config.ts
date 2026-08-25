@@ -173,5 +173,86 @@ export default config({
         }),
       },
     }),
+
+    contributions: collection({
+      label: 'Open Source Contributions',
+      slugField: 'project',
+      path: 'content/contributions/*',
+      format: { data: 'yaml' },
+      schema: {
+        project: fields.slug({ name: { label: 'Project' } }),
+        org: fields.text({ label: 'Owning org / company' }),
+        repo: fields.text({
+          label: 'GitHub repo (owner/name)',
+          description:
+            'Used to pull the live star count. Leave empty to hide stars.',
+        }),
+        url: fields.url({ label: 'Project URL' }),
+        tagline: fields.text({ label: 'What the project is', multiline: true }),
+        summary: fields.text({ label: 'What I contributed', multiline: true }),
+        techStack: fields.array(fields.text({ label: 'Technology' }), {
+          label: 'Tech stack',
+          itemLabel: (props) => props.value ?? '',
+        }),
+        prsUrl: fields.url({ label: 'Link to all my PRs' }),
+        items: fields.array(
+          fields.object({
+            title: fields.text({
+              label: 'Title',
+              validation: { isRequired: true },
+            }),
+            url: fields.url({ label: 'Pull request URL' }),
+            status: fields.select({
+              label: 'Status',
+              options: [
+                { label: 'Merged', value: 'merged' },
+                { label: 'In review', value: 'open' },
+              ],
+              defaultValue: 'open',
+            }),
+            detail: fields.text({ label: 'What it does', multiline: true }),
+          }),
+          {
+            label: 'Pull requests',
+            itemLabel: (props) => props.fields.title.value,
+          }
+        ),
+        order: fields.integer({ label: 'Display order', defaultValue: 99 }),
+      },
+    }),
+
+    credentials: collection({
+      label: 'Certifications & Awards',
+      slugField: 'title',
+      path: 'content/credentials/*',
+      format: { data: 'yaml' },
+      schema: {
+        title: fields.slug({ name: { label: 'Title' } }),
+        kind: fields.select({
+          label: 'Kind',
+          options: [
+            { label: 'Certification', value: 'certification' },
+            { label: 'Award', value: 'award' },
+          ],
+          defaultValue: 'certification',
+        }),
+        issuer: fields.text({
+          label: 'Issuer / event',
+          description: 'e.g. “NVIDIA” or “SJHacks 2025”.',
+        }),
+        issuedDate: fields.date({ label: 'Issued' }),
+        expiryDate: fields.date({
+          label: 'Expires',
+          description: 'Leave empty if it does not expire.',
+        }),
+        summary: fields.text({ label: 'Summary', multiline: true }),
+        url: fields.url({ label: 'Verification / project URL' }),
+        skills: fields.array(fields.text({ label: 'Skill' }), {
+          label: 'Validated skills',
+          itemLabel: (props) => props.value ?? '',
+        }),
+        order: fields.integer({ label: 'Display order', defaultValue: 99 }),
+      },
+    }),
   },
 });

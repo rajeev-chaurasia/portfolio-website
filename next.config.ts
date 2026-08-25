@@ -2,9 +2,11 @@ import type { NextConfig } from "next";
 
 const SECTION_REDIRECTS = [
   'experience',
+  'open-source',
   'projects',
   'skills',
   'education',
+  'credentials',
   'contact',
 ] as const;
 

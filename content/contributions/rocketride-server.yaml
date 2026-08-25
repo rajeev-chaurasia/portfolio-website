@@ -1,0 +1,67 @@
+project: "rocketride-server"
+org: "RocketRide"
+repo: "rocketride-org/rocketride-server"
+url: "https://github.com/rocketride-org/rocketride-server"
+tagline: >-
+  An open-source AI pipeline engine: a multithreaded C++17 runtime executing
+  portable JSON pipelines across roughly 130 Python nodes, 15+ LLM providers,
+  9 vector databases, and four agent frameworks.
+summary: >-
+  Five pull requests against the upstream develop branch, two merged. Every
+  issue but one was filed by someone else, so these are picked-up backlog items
+  rather than self-selected work, and roughly 2,400 of the 3,300 added lines are
+  tests. Each PR names the root cause at file and line, carries a table with a
+  "fix reverted" row, and states its own limits before review finds them.
+techStack:
+  - "Python"
+  - "C++17"
+  - "MCP"
+  - "LLM Evaluation"
+  - "Agentic AI"
+  - "pytest"
+prsUrl: "https://github.com/rocketride-org/rocketride-server/pulls?q=is%3Apr+author%3Arajeev-chaurasia"
+items:
+  - title: "Deliver each lane payload exactly once"
+    url: "https://github.com/rocketride-org/rocketride-server/pull/2063"
+    status: "merged"
+    detail: >-
+      Swept seven handlers across five nodes that silently doubled their output,
+      tracing the cause to the C++ engine's default-forward rule rather than the
+      Python nodes themselves. Tests assert delivery counts instead of "the node
+      forwarded", because the latter stayed true throughout the bug; the
+      reviewing maintainer mutation-tested each node and called it "careful
+      work, well evidenced".
+  - title: "Deliver each flushed embedding batch exactly once"
+    url: "https://github.com/rocketride-org/rocketride-server/pull/2062"
+    status: "merged"
+    detail: >-
+      Found why every 64-chunk batch was delivered twice, and put the suppression
+      in the lane handler rather than the flush helper, because close() routes
+      through the same helper and would have left every downstream node open.
+      Reverting the fix delivers 128 documents where the source sent 64.
+  - title: "Ground chat answers in what retrieval returned"
+    url: "https://github.com/rocketride-org/rocketride-server/pull/2084"
+    status: "open"
+    detail: >-
+      Closed a RAG hallucination gap on both sides of the LLM call. Fabrication
+      measured across five models dropped from 38 of 43 to 0 of 43, with a
+      control group confirming that answerable questions were never suppressed
+      and a separate check that JSON-mode answers still parsed.
+  - title: "Make agent list summaries answerable and repeats visible"
+    url: "https://github.com/rocketride-org/rocketride-server/pull/2072"
+    status: "open"
+    detail: >-
+      Diagnosed a production agent loop that ran 26 waves and roughly 400,000
+      tokens without an answer, because the planner only ever saw two rows of
+      each tool result. Traced it to missing signal and permission rather than a
+      missing safeguard, then measured the fix across models from several
+      vendors.
+  - title: "Add MCP authoring tools for agents building nodes"
+    url: "https://github.com/rocketride-org/rocketride-server/pull/2082"
+    status: "open"
+    detail: >-
+      Extended the in-engine MCP server with resolve_config and scaffold_node,
+      and closed a validate_pipeline gap where a pipeline naming a provider that
+      does not exist validated clean. The scaffolder is checked against the
+      engine's own contract test suite rather than by inspection.
+order: 1

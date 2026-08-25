@@ -14,7 +14,7 @@ export async function GET() {
     '',
     '## Profile',
     '',
-    `- [Portfolio](${SITE_URL}/): About, experience, projects, skills, education, and contact`,
+    `- [Portfolio](${SITE_URL}/): About, experience, open-source contributions, projects, skills, education, certifications, and contact`,
     `- [Resume (PDF)](${resumeLink}): Full resume`,
     '',
     '## Optional',

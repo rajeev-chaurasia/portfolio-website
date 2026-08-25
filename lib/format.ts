@@ -8,6 +8,11 @@ function formatMonth(isoDate: string): string {
   return formatter.format(new Date(`${isoDate}T00:00:00Z`));
 }
 
+/** 'Aug 2026' — for single-point dates (issued, awarded) rather than ranges. */
+export function formatMonthYear(isoDate: string): string {
+  return isoDate ? formatMonth(isoDate) : '';
+}
+
 const SENTENCE_REGEX = /[^.!?]+[.!?]+(?:["')\]]+)?\s*/g;
 
 export function splitSentences(text: string): string[] {
