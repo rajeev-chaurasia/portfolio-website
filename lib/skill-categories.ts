@@ -3,6 +3,7 @@
 export const SKILL_CATEGORIES = [
   { value: 'languages', label: 'Languages' },
   { value: 'ai-llm', label: 'AI & LLM Engineering' },
+  { value: 'testing', label: 'Testing & Verification' },
   { value: 'devinfra', label: 'Developer Infrastructure & CI/CD' },
   { value: 'backend', label: 'Backend & Distributed Systems' },
   { value: 'cloud', label: 'Cloud & Databases' },

@@ -2,7 +2,7 @@ import type { SkillGroup } from '@/lib/keystatic';
 import { sectionIndex } from '@/lib/sections';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Reveal from '@/components/motion/Reveal';
-import SkillsExplorer from '@/components/skills/SkillsExplorer';
+import SkillsGrid from '@/components/skills/SkillsGrid';
 
 export default function Skills({ groups }: { groups: SkillGroup[] }) {
   return (
@@ -20,7 +20,7 @@ export default function Skills({ groups }: { groups: SkillGroup[] }) {
           />
         </Reveal>
         <Reveal delay={0.1}>
-          <SkillsExplorer groups={groups} />
+          <SkillsGrid groups={groups} />
         </Reveal>
       </div>
     </section>
