@@ -7,6 +7,6 @@ description:
   - "Introduced an integrated payment link (achieving 55% adoption) for automated revenue collection and streamlined dealership payment efficiency through enhanced bulk emailing with audit logs and asynchronous receipt processing."
   - "Simplified financial workflows by designing a reusable payment terms utility (using Factory and Strategy patterns for abstraction), making due date calculations easier across multiple modules."
   - "Executed a major monolithic-to-microservices overhaul, cutting service response time by 40% and significantly improving system scalability through asynchronous communication."
-  - "Addressed production issues, significantly decreasing the ticket inflow count by 60% through identifying recurring problems, documenting insights, and engaging with cross-functional stakeholders. This effort ultimately led to on-call recognition."
+  - "Cut P1/P2 ticket inflow by 60% by running root-cause analysis over ClickHouse logs, tracing recurring incidents — including a cross-service race condition — back to their source, then documenting the findings for the on-call rotation. The work led to on-call recognition."
   - "Wrote unit tests to elevate the service unit test coverage to 85%."
 logo: "/images/logos/tekion.png"

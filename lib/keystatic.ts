@@ -46,10 +46,13 @@ export type SkillGroup = {
   skills: string[];
 };
 
+/** 'closed' never appears in content — only the live GitHub lookup yields it. */
+export type ContributionStatus = 'merged' | 'open' | 'closed';
+
 export type ContributionItem = {
   title: string;
   url: string;
-  status: 'merged' | 'open';
+  status: ContributionStatus;
   detail: string;
 };
 

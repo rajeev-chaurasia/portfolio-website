@@ -203,7 +203,9 @@ export default config({
             }),
             url: fields.url({ label: 'Pull request URL' }),
             status: fields.select({
-              label: 'Status',
+              label: 'Status (fallback)',
+              description:
+                'The live state is read from GitHub hourly and wins. This only shows if the API is unreachable.',
               options: [
                 { label: 'Merged', value: 'merged' },
                 { label: 'In review', value: 'open' },

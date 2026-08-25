@@ -1,31 +1,43 @@
 import { FaCodeBranch, FaGithub, FaStar } from 'react-icons/fa';
 import { FiArrowUpRight } from 'react-icons/fi';
-import type { ContributionEntry, ContributionItem } from '@/lib/keystatic';
-import { getRepoStars } from '@/lib/github';
+import type {
+  ContributionEntry,
+  ContributionItem,
+  ContributionStatus,
+} from '@/lib/keystatic';
+import { getPullRequestState, getRepoStars } from '@/lib/github';
 import { sectionIndex } from '@/lib/sections';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Reveal from '@/components/motion/Reveal';
 import Card from '@/components/ui/Card';
 import Tag from '@/components/ui/Tag';
 
-const STATUS_LABEL: Record<ContributionItem['status'], string> = {
+const STATUS_LABEL: Record<ContributionStatus, string> = {
   merged: 'Merged',
   open: 'In review',
+  closed: 'Closed',
 };
 
-const STATUS_CLASSES: Record<ContributionItem['status'], string> = {
+const STATUS_NOUN: Record<ContributionStatus, string> = {
+  merged: 'merged',
+  open: 'in review',
+  closed: 'closed',
+};
+
+const STATUS_CLASSES: Record<ContributionStatus, string> = {
   merged: 'border-accent2/40 bg-accent2/10 text-accent2',
   open: 'border-border bg-surface text-subtle',
+  closed: 'border-border bg-surface text-subtle',
 };
 
-/** '2 merged · 3 in review', skipping either half when it's empty. */
+const STATUS_ORDER: ContributionStatus[] = ['merged', 'open', 'closed'];
+
+/** '2 merged · 3 in review', naming only the states actually present. */
 function contributionSummary(items: ContributionItem[]): string {
-  const merged = items.filter((i) => i.status === 'merged').length;
-  const open = items.length - merged;
-  return [
-    merged > 0 ? `${merged} merged` : null,
-    open > 0 ? `${open} in review` : null,
-  ]
+  return STATUS_ORDER.map((status) => {
+    const count = items.filter((i) => i.status === status).length;
+    return count > 0 ? `${count} ${STATUS_NOUN[status]}` : null;
+  })
     .filter(Boolean)
     .join(' · ');
 }
@@ -69,7 +81,20 @@ function PullRequest({ item }: { item: ContributionItem }) {
 }
 
 async function ContributionCard({ entry }: { entry: ContributionEntry }) {
-  const stars = entry.repo ? await getRepoStars(entry.repo) : null;
+  // GitHub is the source of truth for whether a PR has merged since it was
+  // written up; the authored status is the fallback when the API is unreachable.
+  const [stars, liveStates] = await Promise.all([
+    entry.repo ? getRepoStars(entry.repo) : null,
+    Promise.all(
+      entry.items.map((item) =>
+        item.url ? getPullRequestState(item.url) : null
+      )
+    ),
+  ]);
+  const items = entry.items.map((item, i) => ({
+    ...item,
+    status: liveStates[i] ?? item.status,
+  }));
 
   return (
     <Card className="flex flex-col gap-5">
@@ -97,9 +122,9 @@ async function ContributionCard({ entry }: { entry: ContributionEntry }) {
                 {stars.toLocaleString('en-US')} stars
               </span>
             )}
-            {entry.items.length > 0 && (
+            {items.length > 0 && (
               <span className="text-accent2">
-                {contributionSummary(entry.items)}
+                {contributionSummary(items)}
               </span>
             )}
           </p>
@@ -132,9 +157,9 @@ async function ContributionCard({ entry }: { entry: ContributionEntry }) {
         </div>
       )}
 
-      {entry.items.length > 0 && (
+      {items.length > 0 && (
         <ul className="space-y-4 border-t border-border pt-5">
-          {entry.items.map((item) => (
+          {items.map((item) => (
             <PullRequest key={item.title} item={item} />
           ))}
         </ul>

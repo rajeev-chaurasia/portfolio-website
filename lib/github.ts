@@ -63,6 +63,37 @@ export async function getRepoStars(fullName: string): Promise<number | null> {
   return found ? found.stargazers_count : null;
 }
 
+export type PullRequestState = 'merged' | 'open' | 'closed';
+
+const PR_URL_PATTERN = /github\.com\/([^/]+)\/([^/]+)\/pull\/(\d+)/;
+
+/**
+ * Live state of a pull request, so an open PR that later merges updates itself
+ * on the next revalidation instead of waiting on a content edit. Returns null
+ * when the URL isn't a PR or GitHub can't be reached, and the authored status
+ * in the content file stands in.
+ */
+export async function getPullRequestState(
+  url: string
+): Promise<PullRequestState | null> {
+  const match = url.match(PR_URL_PATTERN);
+  if (!match) return null;
+  const [, owner, repo, number] = match;
+
+  try {
+    const res = await fetch(
+      `https://api.github.com/repos/${owner}/${repo}/pulls/${number}`,
+      { headers: apiHeaders(), next: { revalidate: 3600 } }
+    );
+    if (!res.ok) return null;
+    const pr: { state?: string; merged?: boolean } = await res.json();
+    if (pr.merged) return 'merged';
+    return pr.state === 'closed' ? 'closed' : 'open';
+  } catch {
+    return null;
+  }
+}
+
 /** 'sj-hopes' → 'Sj Hopes' */
 function prettifyRepoName(name: string): string {
   return name

@@ -1,6 +1,6 @@
 name: "Rajeev Ranjan Chaurasia"
 tagline: "Software Engineer"
-bio: "I build agentic systems and developer infrastructure, and I measure them until the numbers hold up. I’m a Software Engineering graduate student at San Jose State University and an NVIDIA Certified Professional in Agentic AI. This summer I built CI infrastructure for NVIDIA’s Omniverse simulation pipelines, and before that I spent two and a half years at Tekion Corp on enterprise accounting and payment systems. I also contribute to open-source AI infrastructure — most recently to RocketRide, a roughly 7,000-star C++ and Python pipeline engine, where two exactly-once delivery fixes of mine are merged. Almost everything I build ships with an evaluation harness and a control group, because a claim I can’t reproduce isn’t worth making."
+bio: "I build agentic systems and the developer infrastructure they run on. I’m a Software Engineering graduate student at San Jose State University and an NVIDIA Certified Professional in Agentic AI. This summer I built CI infrastructure for NVIDIA’s Omniverse simulation pipelines, and before that I spent two and a half years at Tekion Corp on enterprise accounting and payment systems. I also contribute to RocketRide, an open-source AI pipeline engine with a C++ core, where I work on the agent loop, RAG grounding and MCP tooling. Most of what I build ships with an evaluation harness and a control group."
 email: "rajeevchaurasia.dev@gmail.com"
 github: "https://github.com/rajeev-chaurasia"
 linkedin: "https://www.linkedin.com/in/rajeev-chaurasia/"
