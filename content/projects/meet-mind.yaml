@@ -1,0 +1,8 @@
+repo: "meet-mind"
+title: "MeetMind — On-Device Meeting Copilot"
+bullets:
+  - "A meeting copilot that runs entirely on a Mac: Whisper handles the room audio, Gemma reads the whiteboard through the camera, and three agents keep track of decisions and action items."
+  - "Ships a strict air-gapped mode that keeps the whole stack on localhost, so nothing leaves the machine — an Electron front end over a local FastAPI backend, with MLX and LoRA fine-tuning on Apple silicon."
+github: "https://github.com/projects-hacks/meet-mind"
+order: 12
+featured: false

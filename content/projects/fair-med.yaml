@@ -1,0 +1,8 @@
+repo: "fair-med"
+title: "FairMed — Medical Bill Auditing Agents"
+bullets:
+  - "Seven LangGraph agents — triage, parser, pricing, auditor, researcher, fact-checker, writer — read a medical bill, flag duplicates, upcoding, unbundling and overcharges, then draft a ready-to-send dispute letter."
+  - "Prices every line against real CMS data rather than an estimate: the RVU26B Medicare Physician Fee Schedule, NCCI unbundling edits and MUE unit limits, with NVIDIA Nemotron Super 120B behind the reasoning agents. Built for the NVIDIA Agents for Impact hackathon."
+github: "https://github.com/projects-hacks/fair-med"
+order: 11
+featured: false

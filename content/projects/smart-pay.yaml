@@ -1,0 +1,8 @@
+repo: "smart-pay"
+title: "GigSmartPay — Trustless Gig Escrow"
+bullets:
+  - "Escrow for gig work on the Neo N3 testnet: the contract holds payment while GPT-4o Vision compares before and after photos against the rubric written when the job was posted, releasing funds once the work scores well enough."
+  - "A confidence score decides whether the payout runs automatically or goes to a human dispute tribunal, so the fallback is an explicit path rather than a silent failure. Next.js front end, FastAPI orchestration, on-chain settlement."
+github: "https://github.com/projects-hacks/smart-pay"
+order: 24
+featured: false

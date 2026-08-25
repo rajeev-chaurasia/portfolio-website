@@ -3,5 +3,5 @@ bullets:
   - "One Go binary in front of several LLM providers: the same OpenAI API, automatic failover when one goes down, per-tenant spend caps, and a semantic cache."
   - "1.02 ms mean added latency against LiteLLM's 12.14 ms on the same benchmark."
 github: "https://github.com/rajeev-chaurasia/pen-stock"
-order: 12
+order: 15
 featured: false

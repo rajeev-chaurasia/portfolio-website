@@ -1,0 +1,8 @@
+repo: "vocal-bridge-ai"
+title: "ExecDeck — Voice-First Sales Dashboard"
+bullets:
+  - "A sales dashboard you talk to: ask for the critical deals or why a region is underperforming, and a voice agent filters, compares and explains across 100,000 records."
+  - "The agent never receives a row — the web client hands it a summary and it answers from that, with live transcription, side-by-side comparison and an undo that reverts to the previous filter state. Built for the Voice AI Hackathon 2026."
+github: "https://github.com/projects-hacks/vocal-bridge-ai"
+order: 20
+featured: false

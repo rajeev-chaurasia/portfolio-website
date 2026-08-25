@@ -1,0 +1,8 @@
+repo: "edgedrive-vlm"
+title: "EdgeDrive-VLM — Driving VLM on a Consumer NPU"
+bullets:
+  - "Distils a 72B driving vision-language model down to 4B that runs quantized to INT4 on a consumer NPU, holding 13.16 on CODA corner cases where a conventionally fine-tuned model scores 0.24 — below a lookup table that uses no images at all."
+  - "Publishes the negative result alongside it: a matched control with the teacher's reasoning stripped out lands within noise on all five measurements, so the 72B teacher contributed nothing, and the refusal behaviour is shown to fail under partial occlusion rather than claimed to generalise."
+github: "https://github.com/projects-hacks/edgedriveVLM"
+order: 10
+featured: false

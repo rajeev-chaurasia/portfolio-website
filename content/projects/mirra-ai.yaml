@@ -1,0 +1,8 @@
+repo: "mirra-ai"
+title: "MirraAI — Agentic Style & Skin Companion"
+bullets:
+  - "Two photos in, and a Gemini planner routes across nine Perfect Corp skin and virtual try-on APIs to produce skin analysis, try-ons, and outfits that start from clothes the user already owns."
+  - "Every recommendation carries a Proof Card showing tone match, style fit, skin safety and what it actually costs, and the planner falls back to deterministic routing when Gemini is unavailable so the experience never goes blank."
+github: "https://github.com/projects-hacks/mirra-ai"
+order: 19
+featured: false
