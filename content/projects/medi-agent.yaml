@@ -1,0 +1,9 @@
+repo: "medi-agent"
+title: "MediAgent — Multi-Agent Clinical Platform"
+bullets:
+  - "Co-built a multi-agent clinical platform with LangGraph, routing triage, symptom and summarization agents across a self-hosted medical model and two general-purpose models."
+  - "Grounded medication answers in FDA DailyMed source text through a pgvector retrieval layer with a patient-medication metadata prefilter and a similarity floor, so the system answers from real source material or declines to answer at all."
+github: "https://github.com/sjsu-masters-projects/medi-agent"
+demo: "https://app.mediagent.live"
+order: 7
+featured: false
