@@ -146,7 +146,7 @@ function mergeRepo(
     tags,
     stars: repo.stargazers_count,
     github: override?.github || repo.html_url,
-    demo: override?.demo || repo.homepage || null,
+    demo: override?.demo || (override?.hideDemo ? null : repo.homepage) || null,
     featured: override?.featured ?? false,
     order: override ? override.order : 99,
   };

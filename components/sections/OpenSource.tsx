@@ -1,5 +1,5 @@
 import { FaCodeBranch, FaGithub, FaStar } from 'react-icons/fa';
-import { FiArrowUpRight } from 'react-icons/fi';
+import { FiArrowUpRight, FiChevronDown } from 'react-icons/fi';
 import type {
   ContributionEntry,
   ContributionItem,
@@ -42,40 +42,63 @@ function contributionSummary(items: ContributionItem[]): string {
     .join(' · ');
 }
 
+/** '…/pull/2063' → '#2063', for the collapsed row. */
+function pullRequestNumber(url: string): string {
+  const match = url.match(/\/pull\/(\d+)/);
+  return match ? `#${match[1]}` : '';
+}
+
+/**
+ * Native <details> rather than a JS accordion: five write-ups is a wall of text
+ * collapsed by default, and this keeps the whole section server-rendered.
+ * The link lives inside the panel because an anchor nested in <summary> would
+ * toggle the disclosure as well as follow the href.
+ */
 function PullRequest({ item }: { item: ContributionItem }) {
+  const number = pullRequestNumber(item.url);
+
   return (
-    <li className="flex flex-col gap-1.5 sm:flex-row sm:gap-4">
-      <span
-        className={`inline-flex h-fit w-fit shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-xs sm:w-24 sm:justify-center ${STATUS_CLASSES[item.status]}`}
-      >
-        {item.status === 'merged' && (
-          <FaCodeBranch aria-hidden="true" className="h-3 w-3" />
-        )}
-        {STATUS_LABEL[item.status]}
-      </span>
-      <span className="min-w-0">
-        {item.url ? (
-          <a
-            href={item.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-baseline gap-1 font-medium text-foreground transition-colors hover:text-accent"
+    <li>
+      <details className="group">
+        <summary className="flex cursor-pointer list-none items-center gap-3 rounded-md py-1.5 text-left [&::-webkit-details-marker]:hidden">
+          <span
+            className={`inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-xs sm:w-24 ${STATUS_CLASSES[item.status]}`}
           >
-            {item.title}
-            <FiArrowUpRight
-              aria-hidden="true"
-              className="h-3.5 w-3.5 shrink-0 self-center text-subtle transition-colors group-hover:text-accent"
-            />
-          </a>
-        ) : (
-          <span className="font-medium text-foreground">{item.title}</span>
-        )}
-        {item.detail && (
-          <span className="mt-1 block text-sm leading-relaxed text-muted">
-            {item.detail}
+            {item.status === 'merged' && (
+              <FaCodeBranch aria-hidden="true" className="h-3 w-3" />
+            )}
+            {STATUS_LABEL[item.status]}
           </span>
-        )}
-      </span>
+          <span className="min-w-0 flex-1 font-medium text-foreground transition-colors group-hover:text-accent">
+            {item.title}
+          </span>
+          {number && (
+            <span className="shrink-0 font-mono text-xs text-subtle">
+              {number}
+            </span>
+          )}
+          <FiChevronDown
+            aria-hidden="true"
+            className="h-4 w-4 shrink-0 text-subtle transition-transform duration-200 group-open:rotate-180"
+          />
+        </summary>
+        <div className="pb-2 pl-0 pt-2 sm:pl-[7.75rem]">
+          {item.detail && (
+            <p className="text-sm leading-relaxed text-muted">{item.detail}</p>
+          )}
+          {item.url && (
+            <a
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2.5 inline-flex items-center gap-1.5 font-mono text-xs text-accent transition-colors hover:text-accent2"
+            >
+              Read the pull request
+              <FiArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" />
+            </a>
+          )}
+        </div>
+      </details>
     </li>
   );
 }
@@ -158,7 +181,7 @@ async function ContributionCard({ entry }: { entry: ContributionEntry }) {
       )}
 
       {items.length > 0 && (
-        <ul className="space-y-4 border-t border-border pt-5">
+        <ul className="divide-y divide-border border-t border-border">
           {items.map((item) => (
             <PullRequest key={item.title} item={item} />
           ))}

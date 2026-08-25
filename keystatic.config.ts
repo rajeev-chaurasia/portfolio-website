@@ -79,6 +79,12 @@ export default config({
           description: 'Only needed for standalone projects hosted outside your account.',
         }),
         demo: fields.url({ label: 'Demo URL' }),
+        hideDemo: fields.checkbox({
+          label: 'Hide demo link',
+          description:
+            "Suppresses the repo's GitHub homepage — use when that deploy is dead.",
+          defaultValue: false,
+        }),
         order: fields.integer({ label: 'Display order', defaultValue: 99 }),
         featured: fields.checkbox({
           label: 'Featured (full-width card)',

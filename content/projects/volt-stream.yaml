@@ -1,4 +1,5 @@
 repo: "volt-stream"
 github: "https://github.com/rajeev-chaurasia/volt-stream"
-order: 17
+order: 19
+hideDemo: true
 featured: false

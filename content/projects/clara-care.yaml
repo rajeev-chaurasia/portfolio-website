@@ -1,0 +1,9 @@
+repo: "clara-care"
+title: "ClaraCare — Daily Voice Companion"
+bullets:
+  - "Winner of the Deepgram “Voice Operator” autonomous-agent prize at DeveloperWeek 2026: a voice agent that calls an elderly adult once a day for a real conversation."
+  - "Compares how they spoke against their own baseline rather than a population norm, and emails family when something shifts. Twilio and Deepgram carry the call, with a React Native app for the family."
+github: "https://github.com/projects-hacks/clara-care"
+demo: "https://www.claracare.me"
+order: 8
+featured: false

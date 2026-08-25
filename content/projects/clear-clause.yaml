@@ -1,0 +1,9 @@
+repo: "clear-clause"
+title: "ClearClause — Contract Risk Analysis"
+bullets:
+  - "Winner at the Frostbyte Hackathon: upload a contract PDF and get back the clauses that cost you money or sign away rights, highlighted on the page they came from."
+  - "Personal details are stripped out with Presidio before anything reaches the model, and clause analysis streams back over server-sent events from a pgvector retrieval layer."
+github: "https://github.com/projects-hacks/clear-clause"
+demo: "https://devpost.com/software/clearclause-zer4yh"
+order: 9
+featured: false

@@ -90,6 +90,7 @@ export type ProjectOverride = {
   techStack: string[];
   github: string;
   demo: string;
+  hideDemo: boolean;
   order: number;
   featured: boolean;
 };
@@ -227,6 +228,7 @@ export const getProjectOverrides = cache(
       techStack: cleanStrings(entry.techStack),
       github: entry.github ?? '',
       demo: entry.demo ?? '',
+      hideDemo: entry.hideDemo ?? false,
       order: entry.order ?? 99,
       featured: entry.featured ?? false,
     }));

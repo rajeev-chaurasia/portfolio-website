@@ -6,12 +6,6 @@ tagline: >-
   An open-source AI pipeline engine: a multithreaded C++17 runtime executing
   portable JSON pipelines across roughly 130 Python nodes, 15+ LLM providers,
   9 vector databases, and four agent frameworks.
-summary: >-
-  Five pull requests against the upstream develop branch, two merged. Every
-  issue but one was filed by someone else, so these are picked-up backlog items
-  rather than self-selected work, and roughly 2,400 of the 3,300 added lines are
-  tests. Each PR names the root cause at file and line, carries a table with a
-  "fix reverted" row, and states its own limits before review finds them.
 techStack:
   - "Python"
   - "C++17"

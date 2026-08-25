@@ -1,4 +1,5 @@
 repo: "shop-sentinel"
 github: "https://github.com/rajeev-chaurasia/shop-sentinel"
-order: 19
+order: 21
+hideDemo: true
 featured: false
